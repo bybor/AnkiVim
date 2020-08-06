@@ -1,34 +1,76 @@
 ###########################################################################                         
 # Snippets to create anki cards using vim
 ###########################################################################
-extends tex
+extends tex, html
+
 
 priority -50
 
-snippet la "Block [latex]"
-[latex]
-${1}
-[/latex]
+snippet tem "Cloze deletion card template" bA
+<h3><b>$1</b></h3><hr>
+
+$0
 endsnippet
 
-snippet lai "Inline [latex]"
-[latex]${1}[/latex]
+snippet sec "Section template" bA
+<h4><u>$1</u></h4>
+$0
 endsnippet
 
-snippet img "image-path"
-<img = src ${1:/tmp/}$0 />
-$2
+snippet opr "Definition template" bA
+<h4><u>Определение: $1</u></h4>
+$0
 endsnippet
 
-snippet "c([c\d]){1}" "{{c1::Cloze}}" r
-{{c`!p snip.rv = match.group(1) if match.group(1) != 'c' else "1"`::${1:Cloze}}}
+snippet dok "Proof template" bA
+<h4><u>Доказательство</u></h4>
+$0
 endsnippet
 
-snippet $$ "[$]MATH[/S]" iA
-[$]${1:MATH}[/$]
+snippet teo "Theorem template" bA
+<h4><u>Теорема $1</u></h4>
+$0
 endsnippet
 
+snippet cc "Cloze deletion" bA
+{{c$1::$2}}
 
-snippet lfrac "\frac{}{}" 
-\frac{${1}}{${2}}${0} 
+$0
+endsnippet
+
+snippet img "image-path" A
+<img = src ~/Pictures/MyScreenshots/Electrodynamics/${1:img} />
+
+$0
+endsnippet
+
+snippet ci "Cloze deletion" bA
+{{c$1::<img src = "$2" />}}
+$0
+endsnippet
+
+snippet ** "bold text" A
+<b>$1</b>
+
+$0
+endsnippet
+
+snippet __ "underline" A
+<u>$1</u>
+
+$0
+endsnippet
+
+snippet ii "italics" A
+<i>$1</i>$0
+endsnippet
+
+# snippet "c([c\d]){1}" "{{c1::Cloze}}" r
+# {{c`!p snip.rv = match.group(1) if match.group(1) != 'c' else "1"`::${1:Cloze}}}
+# 
+# $0
+# endsnippet
+
+snippet slink
+[${1:link}]($1)
 endsnippet
