@@ -194,8 +194,8 @@ def create_card(deckpath, editor=getenv("EDITOR", "vim"),
         makedirs(deckpath)
 
     qa_headers = "{question}{space}{answer}{space}".format(
-        question=draw_frame(content="QUESTION"),
-        answer=draw_frame(content="ANSWER\t"),
+        question=draw_frame(content="Text  \t"),
+        answer=draw_frame(content="Extra \t"),
         space="\n\n\n",
     )
 
