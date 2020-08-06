@@ -2,6 +2,7 @@
 AnkiVim
 ==================
 
+Check out this [blog post](https://sofiabelen.github.io/selfstudy/Anki-Vim.html) on how to use this tool and some other tips.
 
 Overview
 ========
@@ -12,6 +13,11 @@ My fork
 =======
 
 Same as original, just added my own snippets and used a cloze-deletion template instead of question-answer.
+
+Short demo
+==========
+
+<center> <iframe width="560" height="315" src="https://www.youtube.com/embed/sX76jKcOPZI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> </center>
 
 
 Requirements
