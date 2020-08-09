@@ -1,6 +1,8 @@
 # AnkiVim
 
-Check out this [blog post](https://sofiabelen.github.io/selfstudy/Anki-Vim.html) on how to use this tool and some other tips for adding mathjax (latex) and images to your cards. Also, be sure to take a look a this [short demo](https://youtu.be/sX76jKcOPZI).
+![hippo](demo.gif)
+
+Check out this [blog post](https://sofiabelen.github.io/selfstudy/Anki-Vim.html) on how to use this tool and some other tips for adding mathjax (latex) and images to your cards.
 
 # Overview
 
