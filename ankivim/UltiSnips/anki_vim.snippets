@@ -1,4 +1,4 @@
-###########################################################################
+###########################################################################                         
 # Snippets to create anki cards using vim
 ###########################################################################
 extends tex, html
@@ -7,41 +7,53 @@ extends tex, html
 priority -50
 
 snippet tem "Cloze deletion card template" bA
-<h3><b>$1</b></h3><hr>
+<h1>$1</h1><hr>
 
 $0
 endsnippet
 
 snippet sec "Section template" bA
-<h4><u>$1</u></h4>
+<h2>$1</h2>
 $0
 endsnippet
 
-snippet dfn "Definition template" bA
-<h4><u>Definition: $1</u></h4>
+snippet sl "Subsection template" bA
+<ol>
+    <h3><li>$1</li></h3>$0
+<ol>
 $0
 endsnippet
 
-snippet prf "Proof template" bA
-<h4><u>Proof</u></h4>
+snippet li "Item subsection template" bA
+    <h3><li>$1</li></h3>$0
+endsnippet
+
+snippet opr "Definition template" bA
+<h2>Определение: $1</h2>
 $0
 endsnippet
 
-snippet thr "Theorem template" bA
-<h4><u>Theorem $1</u></h4>
+snippet fr "Theorem definition" bA
+<h2>Формулировка</h2>
+$0
+endsnippet
+
+snippet dok "Proof template" bA
+<h2>Доказательство</h2>
+$0
+endsnippet
+
+snippet teo "Theorem template" bA
+<h2>Теорема $1</h2>
 $0
 endsnippet
 
 snippet cc "Cloze deletion" bA
-{{c$1::$2}}
-
-$0
+{{c$1::$2}}$0
 endsnippet
 
 snippet img "image-path" A
-<img src = "$1" />
-
-$0
+<img src = "$1" />$0
 endsnippet
 
 snippet ci "Cloze deletion" bA
