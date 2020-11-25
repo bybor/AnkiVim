@@ -23,7 +23,7 @@ Clone the repo and install using pip:
 ```bash
     git clone https://github.com/sofiabelen/AnkiVim.git
     cd AnkiVim
-    pip -e .
+    pip install -e .
 ```
 
 
