@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!c:\python39\python.exe
 
 """ Using VIM to generate textfiles which are directly anki-importable.  """
 
@@ -51,10 +51,11 @@ def main():
 
     if args.editor is None:
         editor = getenv("EDITOR", "vim")
+        print(f"Editor: {editor}")
     else:
         editor = args.editor
 
-    if editor in ("vim", "nvim", "neovim"):
+    if editor in ("vim", "nvim", "neovim") or True:
         # for various vim flavors, have default editor args ready to use.
         if not args.editor_args:
             # editor args below target vim 7.4, overwrite for other editor choices.
@@ -79,6 +80,7 @@ def main():
             editor_args = args.editor_args.split(",")
 
     deckpath = args.deckpath or path_join(expanduser("~"), ".ankivim/decks", args.deck)
+    print (f"deckpack: {deckpath}")
 
     while create_card(deckpath=deckpath, editor=editor, editor_args=editor_args):
         # If a card is closed without content or changes, stop

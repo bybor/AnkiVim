@@ -4,7 +4,7 @@ anki(1) as text files.
 """
 from os import makedirs, getenv
 from os.path import abspath, exists as path_exists, join as path_join
-from subprocess import check_call, CalledProcessError
+from subprocess import check_call, CalledProcessError, list2cmdline
 import sys
 import tempfile
 
@@ -14,7 +14,7 @@ from ankivim.errors import HeaderNotIntactError
 # for python2+3 compatibility in file writing
 if sys.version_info.major == 3:
     def write_file(file_handle, string):
-        file_handle.write(string.encode("utf-8"))
+        file_handle.write(string)
 else:
     def write_file(file_handle, string):
         file_handle.write(string)
@@ -78,9 +78,9 @@ def editor_command(filename,
                        # latex syntax highlighting
                        "-c set syntax=tex",
                        # load anki-vim snippets for this buffer
-                       '-c let b:UltiSnipsSnippetDirectories=["UltiSnips", "{snippet_directory}"]'.format(
+                       "-c let b:UltiSnipsSnippetDirectories=['UltiSnips', '{snippet_directory}']".format(
                            snippet_directory=abspath(path_join(
-                               ankivim.__path__[0], "UltiSnips",))),),):
+                               ankivim.__path__[0], 'UltiSnips',))),),):
     """
     Open `filename` using `editor` which is called with arguments
     `editor_args`.
@@ -105,8 +105,7 @@ def editor_command(filename,
         to open `filename`. Can directly be passed to `subprocess.call`.
     """
 
-    return tuple([editor] + list(editor_args) + [filename])
-
+    return tuple([editor + " " + " ".join(list("\"" + x.replace("\"", "\'") + "\"" for x in editor_args)) + " " + filename])
 
 def open_editor(filename,
                 editor=getenv("EDITOR", "vim"),
@@ -120,9 +119,9 @@ def open_editor(filename,
                     # latex syntax highlighting
                     "-c set syntax=tex",
                     # load anki-vim snippets for this buffer
-                    '-c let b:UltiSnipsSnippetDirectories=["UltiSnips", "{snippet_directory}"]'.format(
+                    "-c let b:UltiSnipsSnippetDirectories=['UltiSnips', '{snippet_directory}']".format(
                         snippet_directory=abspath(path_join(
-                            ankivim.__path__[0], "UltiSnips",))),),):
+                            ankivim.__path__[0], 'UltiSnips',))),),):
     """
     Open `filename` using `editor` which is called with arguments
     `editor_args`.
@@ -142,8 +141,11 @@ def open_editor(filename,
 
     """
     call_command = editor_command(filename, editor, editor_args)
+    # print (f"call_command: {call_command}")
+    print (f"call_command: {list2cmdline(call_command)}")
+    print (f"call_command: {' '.join(call_command)}")
     try:
-        check_call(call_command)
+        check_call(' '.join(call_command))
     except CalledProcessError:
         raise ValueError(
             "Failed to call editor '{editor}' on filename '{filename}'.\n "
@@ -165,9 +167,9 @@ def create_card(deckpath, editor=getenv("EDITOR", "vim"),
                     # latex syntax highlighting
                     "-c set syntax=tex",
                     # load anki-vim snippets for this buffer
-                    '-c let b:UltiSnipsSnippetDirectories=["UltiSnips", "{snippet_directory}"]'.format(
+                    "-c let b:UltiSnipsSnippetDirectories=['UltiSnips', '{snippet_directory}']".format(
                         snippet_directory=abspath(path_join(
-                            ankivim.__path__[0], "UltiSnips",))),),):
+                            ankivim.__path__[0], 'UltiSnips',))),),):
     """
     Create a new anki-card in deck at path `deckpath`, by appending new
     formatted content to deckpath/raw_cards.txt.
@@ -194,13 +196,17 @@ def create_card(deckpath, editor=getenv("EDITOR", "vim"),
         makedirs(deckpath)
 
     qa_headers = "{question}{space}{answer}{space}".format(
-        question=draw_frame(content="Text  \t"),
-        answer=draw_frame(content="Extra \t"),
+        #content = "QUESTION"
+        question=draw_frame(content="Text "),
+        #content = "ANSWER\t")
+        answer=draw_frame(content="Extra "),
         space="\n\n\n",
     )
 
-    with tempfile.NamedTemporaryFile(suffix='.anki_vim') as temporary_file:
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.anki_vim') as temporary_file:
+        print(f"writing a temp file: {temporary_file}")
         write_file(temporary_file, qa_headers)
+        print(f"writing a temp file: {temporary_file}")
 
         # flush to ensure Q/A headers are already in the file when we
         # open it in vim.
